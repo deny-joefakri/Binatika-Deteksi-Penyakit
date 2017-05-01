@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Deteksi Golongan Darah</string>
-    <string name="app_title">Sistem Pakar Untuk Mendeteksi Penyakit Berdasarkan Golongan Darah Berbasis Android Menggunakan Metode Forward Chaining dan Backward Chaining</string>
+    <string name="app_title">Sistem Pakar Untuk Mendeteksi Penyakit Berdasarkan Golongan Darah Berbasis Android Menggunakan Metode Backward Chaining</string>
 </resources>

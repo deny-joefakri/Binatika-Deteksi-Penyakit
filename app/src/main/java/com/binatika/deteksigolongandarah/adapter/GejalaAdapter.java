@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.binatika.deteksigolongandarah.R;
+import com.binatika.deteksigolongandarah.api.ViewDataGejalaResponse;
 import com.binatika.deteksigolongandarah.model.Model;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
  */
 
 public class GejalaAdapter extends RecyclerView.Adapter{
-    private ArrayList<Model> list;
+    private List<ViewDataGejalaResponse> list;
     AdapterListener adapterListener;
 
     public GejalaAdapter(){
@@ -31,7 +32,7 @@ public class GejalaAdapter extends RecyclerView.Adapter{
 
     }
 
-    public void updateList(ArrayList<Model> listModels) {
+    public void updateList(List<ViewDataGejalaResponse> listModels) {
         this.list = listModels;
         notifyDataSetChanged();
     }
@@ -40,7 +41,7 @@ public class GejalaAdapter extends RecyclerView.Adapter{
         this.adapterListener = adapterListener;
     }
 
-    public Model getItem(int position) {
+    public ViewDataGejalaResponse getItem(int position) {
         return list.get(position);
     }
 
@@ -70,8 +71,8 @@ public class GejalaAdapter extends RecyclerView.Adapter{
             ButterKnife.bind(this, itemView);
         }
 
-        public void setValue(final Model value) {
-            titleItem.setText(value.getTitle());
+        public void setValue(final ViewDataGejalaResponse value) {
+            titleItem.setText(value.getGejala());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -93,6 +94,6 @@ public class GejalaAdapter extends RecyclerView.Adapter{
     }
 
     public interface AdapterListener {
-        void onClick(Model model);
+        void onClick(ViewDataGejalaResponse model);
     }
 }
