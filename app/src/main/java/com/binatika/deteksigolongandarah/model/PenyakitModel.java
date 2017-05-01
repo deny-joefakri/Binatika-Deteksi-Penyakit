@@ -1,16 +1,12 @@
 package com.binatika.deteksigolongandarah.model;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-
 /**
  * Created by dev_deny on 3/26/17.
  */
 
-public class PenyakitModel extends RealmObject {
+public class PenyakitModel {
 
     private long id;
-    @PrimaryKey
     private String kode_penyakit;
     private String nama_penyakit;
     private String penyebab;

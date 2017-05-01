@@ -26,7 +26,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.realm.Realm;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -47,7 +46,6 @@ public class DiagnosaActivity extends BaseActivity implements GejalaAdapter.Adap
     @BindView(R.id.pbGejala) ProgressBar pbGejala;
     GejalaAdapter gejalaAdapter;
 
-    Realm realm;
     ArrayList<String> temporary;
     String golonganDarah = "";
     private Retrofit retrofit;
@@ -60,14 +58,11 @@ public class DiagnosaActivity extends BaseActivity implements GejalaAdapter.Adap
         initializeRetrofit();
 
         temporary = new ArrayList<>();
-        /*realm = RealmController.with(this).getRealm();
-        RealmController.with(this).refresh();*/
 
         rvGejala.setLayoutManager(new LinearLayoutManager(this));
         rvGejala.setNestedScrollingEnabled(false);
         rvGejala.setHasFixedSize(false);
         rvGejala.setAdapter(gejalaAdapter = new GejalaAdapter());
-        //initDataGejala();
 
 
     }
@@ -95,23 +90,6 @@ public class DiagnosaActivity extends BaseActivity implements GejalaAdapter.Adap
             }
         });
     }
-
-    /*public void initDataGejala(){
-
-        RealmResults<HasilPenyakitModel> getKodeGejala = RealmController.with(this).getKodeGejala(golonganDarah);
-        ArrayList<Model> data = new ArrayList<>();
-        for (int i = 0; i < getKodeGejala.size(); i++) {
-            GejalaPenyakitModel getGejala = RealmController.with(this).getGejala(getKodeGejala.get(i).getKode_gejala());
-            Model model = new Model();
-            model.setTitle(getGejala.getGejala());
-            model.setKode(getGejala.getKode_gejala());
-            data.add(model);
-        }
-
-        gejalaAdapter.updateList(data);
-        gejalaAdapter.setAdapterListener(this);
-
-    }*/
 
     @OnClick(R.id.btnLanjut)
     public void btnLanjut(){

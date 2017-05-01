@@ -15,9 +15,6 @@ import android.widget.Toast;
 
 import com.binatika.deteksigolongandarah.R;
 import com.binatika.deteksigolongandarah.model.PenyakitModel;
-import com.binatika.deteksigolongandarah.realm.RealmController;
-
-import io.realm.Realm;
 
 
 /**
@@ -25,7 +22,6 @@ import io.realm.Realm;
  */
 public class PenyakitFormDialog extends DialogFragment {
 
-    Realm realm;
     OnListener onListener;
 
     public static PenyakitFormDialog newIntance(String view, String kode_penyakit, int total_data) {
@@ -59,9 +55,6 @@ public class PenyakitFormDialog extends DialogFragment {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         setStyle(STYLE_NO_FRAME, 0);
 
-        realm = RealmController.with(this).getRealm();
-        RealmController.with(this).refresh();
-
         String view = getArguments().getString("view");
 
         final EditText ed_kode_penyakit = (EditText) v.findViewById(R.id.ed_kode_penyakit);
@@ -81,7 +74,7 @@ public class PenyakitFormDialog extends DialogFragment {
             btnTambah.setVisibility(View.GONE);
             viewEditDelete.setVisibility(View.VISIBLE);
 
-            PenyakitModel penyakitModel = RealmController.with(this).getPenyakit(getArguments().getString("kode"));
+            PenyakitModel penyakitModel = new PenyakitModel();
 
             ed_kode_penyakit.setText(penyakitModel.getKode_penyakit());
             ed_nama_penyakit.setText(penyakitModel.getNama_penyakit());
@@ -112,11 +105,8 @@ public class PenyakitFormDialog extends DialogFragment {
                     Toast.makeText(getActivity(), "Penyebab tidak boleh kosong", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    PenyakitModel penyakit = RealmController.with(getActivity()).getPenyakit(ed_kode_penyakit.getText().toString());
+                    PenyakitModel penyakit = new PenyakitModel();
                     if (penyakit == null){
-                        realm.beginTransaction();
-                        realm.copyToRealm(penyakitModel);
-                        realm.commitTransaction();
 
                         onListener.onFinish();
                         dismiss();
@@ -131,13 +121,11 @@ public class PenyakitFormDialog extends DialogFragment {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PenyakitModel penyakitModel = RealmController.with(getActivity()).getPenyakit(getArguments().getString("kode"));
-                realm.beginTransaction();
+                PenyakitModel penyakitModel = new PenyakitModel();
                 penyakitModel.setKode_penyakit(ed_kode_penyakit.getText().toString());
                 penyakitModel.setNama_penyakit(ed_nama_penyakit.getText().toString());
                 penyakitModel.setPengobatan(ed_pengobatan.getText().toString());
                 penyakitModel.setPenyebab(ed_penyebab.getText().toString());
-                realm.commitTransaction();
 
                 onListener.onFinish();
                 dismiss();
@@ -147,10 +135,7 @@ public class PenyakitFormDialog extends DialogFragment {
         btnHapus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PenyakitModel penyakitModel = RealmController.with(getActivity()).getPenyakit(getArguments().getString("kode"));
-                realm.beginTransaction();
-                penyakitModel.removeFromRealm();
-                realm.commitTransaction();
+                PenyakitModel penyakitModel = new PenyakitModel();
 
                 onListener.onFinish();
                 dismiss();

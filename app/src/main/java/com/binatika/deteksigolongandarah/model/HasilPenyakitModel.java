@@ -1,13 +1,10 @@
 package com.binatika.deteksigolongandarah.model;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-
 /**
  * Created by dev_deny on 3/26/17.
  */
 
-public class HasilPenyakitModel extends RealmObject {
+public class HasilPenyakitModel {
 
     private String golongan_darah;
     private String kode_penyakit;

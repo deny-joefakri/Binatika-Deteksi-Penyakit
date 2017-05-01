@@ -1,12 +1,10 @@
 package com.binatika.deteksigolongandarah.model;
 
-import io.realm.RealmObject;
-
 /**
  * Created by dev_deny on 4/1/17.
  */
 
-public class UserModel extends RealmObject {
+public class UserModel {
 
     private String username;
     private String password;

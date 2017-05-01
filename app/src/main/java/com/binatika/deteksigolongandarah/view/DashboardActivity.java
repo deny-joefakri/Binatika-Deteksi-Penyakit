@@ -9,16 +9,12 @@ import android.widget.Toast;
 import com.binatika.deteksigolongandarah.R;
 import com.binatika.deteksigolongandarah.model.HasilPenyakitModel;
 import com.binatika.deteksigolongandarah.model.UserModel;
-import com.binatika.deteksigolongandarah.realm.RealmController;
 import com.binatika.deteksigolongandarah.util.UserPreference;
 import com.binatika.deteksigolongandarah.util.Util;
 import com.binatika.deteksigolongandarah.view.base.BaseActivity;
-import com.binatika.deteksigolongandarah.realm.InsertData;
 import com.binatika.deteksigolongandarah.widget.LoginDialog;
 
 import butterknife.OnClick;
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 /**
  * Created by dev_deny on 3/26/17.
@@ -26,7 +22,6 @@ import io.realm.RealmResults;
 
 public class DashboardActivity extends BaseActivity{
 
-    Realm realm;
     UserPreference userPreference;
 
     @Override
@@ -36,11 +31,7 @@ public class DashboardActivity extends BaseActivity{
         userPreference = UserPreference.getInstance(this);
 
         if (!userPreference.getInput()){
-            new InsertData(this);
         }
-
-        realm = RealmController.with(this).getRealm();
-        RealmController.with(this).refresh();
     }
 
     @OnClick(R.id.btnDiagnosa)

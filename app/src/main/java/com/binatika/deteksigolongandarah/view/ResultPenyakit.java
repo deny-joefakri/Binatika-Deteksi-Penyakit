@@ -14,7 +14,6 @@ import com.binatika.deteksigolongandarah.api.ViewDataGejalaResponse;
 import com.binatika.deteksigolongandarah.model.GejalaPenyakitModel;
 import com.binatika.deteksigolongandarah.model.HasilPenyakitModel;
 import com.binatika.deteksigolongandarah.model.PenyakitModel;
-import com.binatika.deteksigolongandarah.realm.RealmController;
 import com.binatika.deteksigolongandarah.util.Const;
 import com.binatika.deteksigolongandarah.view.base.BaseActivity;
 
@@ -23,8 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
-import io.realm.Realm;
-import io.realm.RealmResults;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -40,11 +37,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ResultPenyakit extends BaseActivity {
 
     @BindView(R.id.resultPenyakit) TextView resultPenyakit;
-    Realm realm;
     private Retrofit retrofit;
     ArrayList<String> dataReceiver;
     ArrayList<String> resultData;
-    String temporaryValue = "";
     int i = 0;
 
     @Override
@@ -53,8 +48,6 @@ public class ResultPenyakit extends BaseActivity {
         setLayout(R.layout.activity_hasil, this);
         resultData = new ArrayList<>();
 
-        /*realm = RealmController.with(this).getRealm();
-        RealmController.with(this).refresh();*/
 
         initializeRetrofit();
         result();
@@ -67,34 +60,6 @@ public class ResultPenyakit extends BaseActivity {
         for (int i = 0; i < dataReceiver.size(); i++) {
             getData(golongan_darah, dataReceiver.get(i));
         }
-
-        /*String temporaryValue = "";
-        ArrayList<String> resultData = new ArrayList<>();
-        for (int i = 0; i < dataReceiver.size(); i++) {
-            Log.e("receiver", dataReceiver.get(i));
-            RealmResults<HasilPenyakitModel> getData = RealmController.with(this).hasilAkhirWithGejala(golongan_darah, dataReceiver.get(i));
-            for (int j = 0; j < getData.size(); j++) {
-                if (!getData.get(j).getKode_penyakit().equals(temporaryValue)){
-                    temporaryValue = getData.get(j).getKode_penyakit();
-                    PenyakitModel getPenyakit = RealmController.with(this).getPenyakit(getData.get(j).getKode_penyakit());
-                    resultData.add(getPenyakit.getNama_penyakit());
-                    Log.e("kode penyakit", getData.get(j).getKode_penyakit());
-                    Log.e("nama penyakit", getPenyakit.getNama_penyakit());
-                }
-            }
-        }
-
-        for (int i = 0; i < resultData.size(); i++) {
-            if (resultData.size() == 1) {
-                resultPenyakit.setText(resultData.get(0));
-            } else if (resultData.size() == 2) {
-                resultPenyakit.setText(resultData.get(0) + resultData.get(1));
-            } else if (resultData.size() == 3) {
-                resultPenyakit.setText(resultData.get(0) + resultData.get(1) + resultData.get(2));
-            } else {
-                resultPenyakit.setText(resultData.get(0) + resultData.get(1) + resultData.get(2) + resultData.get(3));
-            }
-        }*/
 
     }
 
@@ -125,24 +90,8 @@ public class ResultPenyakit extends BaseActivity {
                 i++;
                 try {
                     if(response.body()!=null){
-                        /*resultData.add(response.body().getData().getNamaPenyakit());
-                        Log.e("data penyakit", response.body().getData().getNamaPenyakit());*/
 
                         resultData.add(response.body().getData().getNamaPenyakit());
-
-                        /*if (resultData.size() == 0){
-                            resultData.add(response.body().getData().getNamaPenyakit());
-                        } else {
-                            for (int j = 0; j < resultData.size(); j++) {
-                                if (!resultData.get(j).equals(response.body().getData().getNamaPenyakit())){
-                                    resultData.add(response.body().getData().getNamaPenyakit());
-                                }
-                            }
-                        }*/
-
-                        /*if (!response.body().getData().getKodePenyakit().equals(temporaryValue)){
-                            temporaryValue = response.body().getData().getKodePenyakit();
-                        }*/
 
                         if (i == dataReceiver.size()){
                             resultPenyakit.setText(merge(resultData));
@@ -160,18 +109,6 @@ public class ResultPenyakit extends BaseActivity {
             }
         });
 
-
-        /*for (int i = 0; i < resultData.size(); i++) {
-            if (resultData.size() == 1) {
-                resultPenyakit.setText(resultData.get(0));
-            } else if (resultData.size() == 2) {
-                resultPenyakit.setText(resultData.get(0) + resultData.get(1));
-            } else if (resultData.size() == 3) {
-                resultPenyakit.setText(resultData.get(0) + resultData.get(1) + resultData.get(2));
-            } else {
-                resultPenyakit.setText(resultData.get(0) + resultData.get(1) + resultData.get(2) + resultData.get(3));
-            }
-        }*/
     }
 
     public static String merge(ArrayList<String> result){
