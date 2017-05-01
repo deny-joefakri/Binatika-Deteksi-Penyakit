@@ -21,6 +21,9 @@ public class ViewDataGejalaResponse {
     @SerializedName("kode_penyakit")
     @Expose
     private String kodePenyakit;
+    @SerializedName("kode_pertanyaan")
+    @Expose
+    private String kodePertanyaan;
 
     private boolean checked;
 
@@ -64,4 +67,12 @@ public class ViewDataGejalaResponse {
         this.checked = checked;
     }
 
+
+    public String getKodePertanyaan() {
+        return kodePertanyaan;
+    }
+
+    public void setKodePertanyaan(String kodePertanyaan) {
+        this.kodePertanyaan = kodePertanyaan;
+    }
 }

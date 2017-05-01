@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Deteksi Golongan Darah</string>
     <string name="app_title">Sistem Pakar Untuk Mendeteksi Penyakit Berdasarkan Golongan Darah Berbasis Android Menggunakan Metode Backward Chaining</string>
+
+    <string name="question_1">Bagaimana? Apa keluhan Anda?</string>
+    <string name="question_2">Apakah ada gejala lain yang Anda rasakan?</string>
 </resources>

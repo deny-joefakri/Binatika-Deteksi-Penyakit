@@ -12,7 +12,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.binatika.deteksigolongandarah.R;
-import com.binatika.deteksigolongandarah.adapter.GejalaAdapter;
+import com.binatika.deteksigolongandarah.adapter.GejalaAdapter1;
+import com.binatika.deteksigolongandarah.adapter.GejalaAdapter2;
 import com.binatika.deteksigolongandarah.api.APIService;
 import com.binatika.deteksigolongandarah.api.ViewDataGejalaResponse;
 import com.binatika.deteksigolongandarah.api.BaseResponseGejala;
@@ -38,13 +39,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by dev_deny on 3/26/17.
  */
 
-public class DiagnosaActivity extends BaseActivity implements GejalaAdapter.AdapterListener{
+public class DiagnosaActivity extends BaseActivity implements GejalaAdapter1.AdapterListener, GejalaAdapter2.AdapterListener{
 
     @BindView(R.id.spnGolonganDarah) Spinner spnGolonganDarah;
-    @BindView(R.id.rvAnswer) RecyclerView rvAnswer;
-    @BindView(R.id.rvGejala) RecyclerView rvGejala;
-    @BindView(R.id.pbGejala) ProgressBar pbGejala;
-    GejalaAdapter gejalaAdapter;
+    @BindView(R.id.rvQuestion1) RecyclerView rvQuestion1;
+    @BindView(R.id.rvQuestion2) RecyclerView rvQuestion2;
+    @BindView(R.id.pbQuestion1) ProgressBar pbQuestion1;
+    @BindView(R.id.pbQuestion2) ProgressBar pbQuestion2;
+    GejalaAdapter1 gejalaAdapter1;
+    GejalaAdapter2 gejalaAdapter2;
 
     ArrayList<String> temporary;
     String golonganDarah = "";
@@ -59,11 +62,15 @@ public class DiagnosaActivity extends BaseActivity implements GejalaAdapter.Adap
 
         temporary = new ArrayList<>();
 
-        rvGejala.setLayoutManager(new LinearLayoutManager(this));
-        rvGejala.setNestedScrollingEnabled(false);
-        rvGejala.setHasFixedSize(false);
-        rvGejala.setAdapter(gejalaAdapter = new GejalaAdapter());
+        rvQuestion1.setLayoutManager(new LinearLayoutManager(this));
+        rvQuestion1.setNestedScrollingEnabled(false);
+        rvQuestion1.setHasFixedSize(false);
+        rvQuestion1.setAdapter(gejalaAdapter1 = new GejalaAdapter1());
 
+        rvQuestion2.setLayoutManager(new LinearLayoutManager(this));
+        rvQuestion2.setNestedScrollingEnabled(false);
+        rvQuestion2.setHasFixedSize(false);
+        rvQuestion2.setAdapter(gejalaAdapter2 = new GejalaAdapter2());
 
     }
 
@@ -121,13 +128,23 @@ public class DiagnosaActivity extends BaseActivity implements GejalaAdapter.Adap
         result.enqueue(new Callback<BaseResponseGejala>() {
             @Override
             public void onResponse(Call<BaseResponseGejala> call, Response<BaseResponseGejala> response) {
-                pbGejala.setVisibility(View.GONE);
+                pbQuestion1.setVisibility(View.GONE);
+                pbQuestion2.setVisibility(View.GONE);
                 try {
                     if(response.body()!=null){
-                        List<ViewDataGejalaResponse> data = response.body().getData();
-                        Log.e("response", ""+response.body().getStatus());
-                        gejalaAdapter.updateList(data);
-                        gejalaAdapter.setAdapterListener(DiagnosaActivity.this);
+                        List<ViewDataGejalaResponse> dataP1 = new ArrayList<>();
+                        List<ViewDataGejalaResponse> dataP2 = new ArrayList<>();
+                        for (int i = 0; i < response.body().getData().size(); i++) {
+                            if (response.body().getData().get(i).getKodePertanyaan().equals("P1")){
+                                dataP1.add(response.body().getData().get(i));
+                            } else {
+                                dataP2.add(response.body().getData().get(i));
+                            }
+                        }
+                        gejalaAdapter1.updateList(dataP1);
+                        gejalaAdapter1.setAdapterListener(DiagnosaActivity.this);
+                        gejalaAdapter2.updateList(dataP2);
+                        gejalaAdapter2.setAdapterListener(DiagnosaActivity.this);
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -136,7 +153,8 @@ public class DiagnosaActivity extends BaseActivity implements GejalaAdapter.Adap
 
             @Override
             public void onFailure(Call<BaseResponseGejala> call, Throwable t) {
-                pbGejala.setVisibility(View.GONE);
+                pbQuestion1.setVisibility(View.GONE);
+                pbQuestion2.setVisibility(View.GONE);
                 t.printStackTrace();
             }
         });

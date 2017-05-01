@@ -7,10 +7,6 @@ import android.support.v7.widget.RecyclerView;
 
 import com.binatika.deteksigolongandarah.R;
 import com.binatika.deteksigolongandarah.adapter.DataPenyakitAdapter;
-import com.binatika.deteksigolongandarah.adapter.GejalaAdapter;
-import com.binatika.deteksigolongandarah.model.GejalaPenyakitModel;
-import com.binatika.deteksigolongandarah.model.HasilPenyakitModel;
-import com.binatika.deteksigolongandarah.model.Model;
 import com.binatika.deteksigolongandarah.model.PenyakitModel;
 import com.binatika.deteksigolongandarah.util.Util;
 import com.binatika.deteksigolongandarah.view.base.BaseActivity;

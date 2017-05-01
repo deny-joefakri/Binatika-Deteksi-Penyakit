@@ -34,24 +34,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pertanyaan"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvAnswer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp">
-            </android.support.v7.widget.RecyclerView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gejala"
+                android:text="@string/question_1"
                 android:textStyle="bold"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="30dp"
@@ -61,12 +44,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ProgressBar
-                    android:id="@+id/pbGejala"
+                    android:id="@+id/pbQuestion1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"/>
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvGejala"
+                    android:id="@+id/rvQuestion1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp">
+                </android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/question_2"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ProgressBar
+                    android:id="@+id/pbQuestion2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvQuestion2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"

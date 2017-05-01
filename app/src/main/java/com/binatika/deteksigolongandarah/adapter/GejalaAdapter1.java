@@ -23,11 +23,11 @@ import butterknife.ButterKnife;
  * Created by air-water on 2/12/17.
  */
 
-public class GejalaAdapter extends RecyclerView.Adapter{
+public class GejalaAdapter1 extends RecyclerView.Adapter{
     private List<ViewDataGejalaResponse> list;
     AdapterListener adapterListener;
 
-    public GejalaAdapter(){
+    public GejalaAdapter1(){
         list = new ArrayList<>();
 
     }
@@ -53,7 +53,9 @@ public class GejalaAdapter extends RecyclerView.Adapter{
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((Holder) holder).setValue(list.get(position));
+        if (list.get(position).getKodePertanyaan().equals("P1")){
+            ((Holder) holder).setValue(list.get(position));
+        }
     }
 
     @Override
@@ -72,23 +74,24 @@ public class GejalaAdapter extends RecyclerView.Adapter{
         }
 
         public void setValue(final ViewDataGejalaResponse value) {
-            titleItem.setText(value.getGejala());
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (ckItem.isChecked()){
-                        ckItem.setChecked(false);
-                        value.setChecked(false);
-                        if (!value.isChecked()) Log.e("checked", "false");
-                    } else {
-                        ckItem.setChecked(true);
-                        value.setChecked(true);
-                        if (value.isChecked()) Log.e("checked", "true");
+            if (value.getKodePertanyaan().equals("P1")){
+                titleItem.setText(value.getGejala());
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (ckItem.isChecked()){
+                            ckItem.setChecked(false);
+                            value.setChecked(false);
+                            if (!value.isChecked()) Log.e("checked", "false");
+                        } else {
+                            ckItem.setChecked(true);
+                            value.setChecked(true);
+                            if (value.isChecked()) Log.e("checked", "true");
+                        }
+                        adapterListener.onClick(value);
                     }
-                    adapterListener.onClick(value);
-                }
-            });
-
+                });
+            }
         }
 
     }
@@ -96,4 +99,15 @@ public class GejalaAdapter extends RecyclerView.Adapter{
     public interface AdapterListener {
         void onClick(ViewDataGejalaResponse model);
     }
+
+    //view_gejala
+    /*SELECT gjl.gejala,
+    gjl.kode_gelaja AS kode_gejala,
+    hsl.gol_darah AS golongan_darah,
+    hsl.kode_penyakit,
+    hsl.kode_pertanyaan
+    FROM gejala gjl,
+    hasil hsl
+    WHERE hsl.kode_gejala::text = gjl.kode_gelaja::text
+    GROUP BY gjl.gejala, gjl.kode_gelaja, hsl.gol_darah, hsl.kode_penyakit, hsl.kode_pertanyaan;*/
 }
