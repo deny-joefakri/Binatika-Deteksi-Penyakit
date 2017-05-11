@@ -3,11 +3,13 @@ package com.binatika.deteksigolongandarah.api;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by dev_deny on 5/1/17.
  */
 
-public class ViewDataGejalaResponse {
+public class ViewDataGejalaResponse implements Serializable{
 
     @SerializedName("gejala")
     @Expose

@@ -76,8 +76,6 @@ public class ResultPenyakit extends BaseActivity {
     }
 
     private void getData(String golonganDarah, String kode_gejala){
-
-
         HashMap<String, String> params = new HashMap<>();
         params.put("golongan_darah", golonganDarah);
         params.put("kode_gejala", kode_gejala);
@@ -130,6 +128,7 @@ public class ResultPenyakit extends BaseActivity {
                 }
             }
         }
+        data = data.substring(0, data.length() - 2);
         return data;
     }
 

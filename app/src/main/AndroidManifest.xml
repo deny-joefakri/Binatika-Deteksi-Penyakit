@@ -19,6 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.DiagnosaActivity"></activity>
+        <activity android:name=".view.DiagnosaActivity2"></activity>
+        <activity android:name=".view.ChooseBloodActivity"></activity>
         <activity android:name=".view.ResultPenyakit"></activity>
         <activity android:name=".view.ViewDataActivity"></activity>
         <activity android:name=".view.CrudDataPenyakitActivity"></activity>

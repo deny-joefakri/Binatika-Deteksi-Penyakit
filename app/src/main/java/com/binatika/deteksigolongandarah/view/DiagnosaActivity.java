@@ -2,6 +2,7 @@ package com.binatika.deteksigolongandarah.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +22,7 @@ import com.binatika.deteksigolongandarah.util.Const;
 import com.binatika.deteksigolongandarah.view.base.BaseActivity;
 import com.binatika.deteksigolongandarah.widget.SingleSpinnerAdapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,24 +43,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DiagnosaActivity extends BaseActivity implements GejalaAdapter1.AdapterListener, GejalaAdapter2.AdapterListener{
 
-    @BindView(R.id.spnGolonganDarah) Spinner spnGolonganDarah;
     @BindView(R.id.rvQuestion1) RecyclerView rvQuestion1;
-    @BindView(R.id.rvQuestion2) RecyclerView rvQuestion2;
     @BindView(R.id.pbQuestion1) ProgressBar pbQuestion1;
-    @BindView(R.id.pbQuestion2) ProgressBar pbQuestion2;
     GejalaAdapter1 gejalaAdapter1;
-    GejalaAdapter2 gejalaAdapter2;
 
     ArrayList<String> temporary;
     String golonganDarah = "";
+    List<ViewDataGejalaResponse> dataP2;
     private Retrofit retrofit;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayout(R.layout.activity_diagnosa, this);
-        initView();
         initializeRetrofit();
+        initView();
 
         temporary = new ArrayList<>();
 
@@ -67,42 +66,23 @@ public class DiagnosaActivity extends BaseActivity implements GejalaAdapter1.Ada
         rvQuestion1.setHasFixedSize(false);
         rvQuestion1.setAdapter(gejalaAdapter1 = new GejalaAdapter1());
 
-        rvQuestion2.setLayoutManager(new LinearLayoutManager(this));
-        rvQuestion2.setNestedScrollingEnabled(false);
-        rvQuestion2.setHasFixedSize(false);
-        rvQuestion2.setAdapter(gejalaAdapter2 = new GejalaAdapter2());
-
     }
 
     public void initView(){
-        final ArrayList<String> golongan_darah = new ArrayList<>();
-        golongan_darah.add("A");
-        golongan_darah.add("B");
-        golongan_darah.add("O");
-        golongan_darah.add("AB");
+        Log.e("type", getIntent().getStringExtra("type"));
+        golonganDarah = getIntent().getStringExtra("type");
+        getData(golonganDarah);
 
-        spnGolonganDarah.setAdapter(new SingleSpinnerAdapter(this, getLayoutInflater(), golongan_darah));
-
-        spnGolonganDarah.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                golonganDarah = golongan_darah.get(position);
-                //initDataGejala();
-                getData(golonganDarah);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 
     @OnClick(R.id.btnLanjut)
     public void btnLanjut(){
-        Intent intent = new Intent(DiagnosaActivity.this, ResultPenyakit.class);
-        intent.putStringArrayListExtra("data", temporary);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("data", (Serializable) dataP2);
+        Intent intent = new Intent(DiagnosaActivity.this, DiagnosaActivity2.class);
+        intent.putStringArrayListExtra("temporary1", temporary);
         intent.putExtra("golonganDarah", golonganDarah);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
@@ -129,11 +109,10 @@ public class DiagnosaActivity extends BaseActivity implements GejalaAdapter1.Ada
             @Override
             public void onResponse(Call<BaseResponseGejala> call, Response<BaseResponseGejala> response) {
                 pbQuestion1.setVisibility(View.GONE);
-                pbQuestion2.setVisibility(View.GONE);
                 try {
                     if(response.body()!=null){
                         List<ViewDataGejalaResponse> dataP1 = new ArrayList<>();
-                        List<ViewDataGejalaResponse> dataP2 = new ArrayList<>();
+                        dataP2 = new ArrayList<>();
                         for (int i = 0; i < response.body().getData().size(); i++) {
                             if (response.body().getData().get(i).getKodePertanyaan().equals("P1")){
                                 dataP1.add(response.body().getData().get(i));
@@ -143,8 +122,7 @@ public class DiagnosaActivity extends BaseActivity implements GejalaAdapter1.Ada
                         }
                         gejalaAdapter1.updateList(dataP1);
                         gejalaAdapter1.setAdapterListener(DiagnosaActivity.this);
-                        gejalaAdapter2.updateList(dataP2);
-                        gejalaAdapter2.setAdapterListener(DiagnosaActivity.this);
+                        Log.e("data size", ""+dataP2.size());
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -154,7 +132,6 @@ public class DiagnosaActivity extends BaseActivity implements GejalaAdapter1.Ada
             @Override
             public void onFailure(Call<BaseResponseGejala> call, Throwable t) {
                 pbQuestion1.setVisibility(View.GONE);
-                pbQuestion2.setVisibility(View.GONE);
                 t.printStackTrace();
             }
         });

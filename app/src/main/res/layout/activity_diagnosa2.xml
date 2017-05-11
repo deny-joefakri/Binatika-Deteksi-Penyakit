@@ -35,10 +35,11 @@
                     android:textStyle="bold"
                     android:textSize="25dp"/>
             </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/question_1"
+                android:text="@string/question_2"
                 android:textStyle="bold"
                 android:textSize="20dp"
                 android:layout_marginTop="20dp"
@@ -57,26 +58,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ProgressBar
-                    android:id="@+id/pbQuestion1"
+                    android:id="@+id/pbQuestion2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"/>
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvQuestion1"
+                    android:id="@+id/rvQuestion2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp">
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="10dp">
                 </android.support.v7.widget.RecyclerView>
             </RelativeLayout>
-
 
             <Button
                 android:id="@+id/btnLanjut"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:text="lanjut"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="50dp"
                 android:layout_gravity="center"/>
         </LinearLayout>

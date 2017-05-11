@@ -36,10 +36,9 @@ public class DashboardActivity extends BaseActivity{
 
     @OnClick(R.id.btnDiagnosa)
     public void btnDiagnosa(){
-        startActivity(new Intent(DashboardActivity.this, DiagnosaActivity.class));
+        startActivity(new Intent(DashboardActivity.this, ChooseBloodActivity.class));
     }
 
-    @OnClick(R.id.btnUpdate)
     public void btnUpdate(){
         Util.loginDialog(getSupportFragmentManager()).setOnLogin(new LoginDialog.OnLogin() {
             @Override
