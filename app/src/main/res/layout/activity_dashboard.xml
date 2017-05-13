@@ -40,88 +40,96 @@
                 android:layout_marginRight="20dp"/>
         </LinearLayout>
 
-
-        <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            app:cardCornerRadius="5dp"
-            android:layout_gravity="center">
-
-            <LinearLayout
-                android:id="@+id/btnDiagnosa"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:background="@color/colorPrimary2"
+            android:gravity="center">
+            <android.support.v7.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_item_grid"
-                android:orientation="vertical"
-                android:padding="10dp">
+                app:cardCornerRadius="5dp"
+                android:layout_gravity="center">
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/btnDiagnosa"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
-                    android:gravity="center">
+                    android:background="@drawable/bg_item_grid"
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-                    <ImageView
-                        android:id="@+id/itemDiagnosa"
-                        android:layout_width="wrap_content"
-                        android:layout_height="55dp"
-                        android:src="@drawable/stethoscope" />
-
-                    <TextView
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/itemDiagnosa"
-                        android:layout_centerInParent="true"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:text="DIAGNOSA"
-                        android:textColor="@android:color/black"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+                        android:layout_margin="1dp"
+                        android:gravity="center">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            app:cardCornerRadius="5dp"
-            android:layout_gravity="center">
+                        <ImageView
+                            android:id="@+id/itemDiagnosa"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:src="@drawable/stethoscope" />
 
-            <LinearLayout
-                android:id="@+id/btnBantuan"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/itemDiagnosa"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:text="DIAGNOSA"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_item_grid"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:layout_marginTop="30dp"
+                app:cardCornerRadius="5dp"
+                android:layout_gravity="center">
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/btnBantuan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
-                    android:gravity="center">
+                    android:background="@drawable/bg_item_grid"
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-                    <ImageView
-                        android:id="@+id/itemBantuan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="55dp"
-                        android:src="@drawable/information" />
-
-                    <TextView
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/itemBantuan"
-                        android:layout_centerInParent="true"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:text="BANTUAN"
-                        android:textColor="@android:color/black"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+                        android:layout_margin="1dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/itemBantuan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:src="@drawable/information" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/itemBantuan"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:text="BANTUAN"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
 
     </LinearLayout>
 

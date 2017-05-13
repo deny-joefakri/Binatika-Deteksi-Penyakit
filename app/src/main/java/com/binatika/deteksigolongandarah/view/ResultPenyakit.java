@@ -128,7 +128,8 @@ public class ResultPenyakit extends BaseActivity {
                 }
             }
         }
-        data = data.substring(0, data.length() - 2);
+        if (data.substring(data.length() - 2).contains(","))
+            data = data.substring(0, data.length() - 2);
         return data;
     }
 

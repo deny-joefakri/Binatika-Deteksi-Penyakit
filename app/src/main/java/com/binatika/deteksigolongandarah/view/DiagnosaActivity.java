@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.binatika.deteksigolongandarah.R;
 import com.binatika.deteksigolongandarah.adapter.GejalaAdapter1;
@@ -77,13 +78,18 @@ public class DiagnosaActivity extends BaseActivity implements GejalaAdapter1.Ada
 
     @OnClick(R.id.btnLanjut)
     public void btnLanjut(){
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("data", (Serializable) dataP2);
-        Intent intent = new Intent(DiagnosaActivity.this, DiagnosaActivity2.class);
-        intent.putStringArrayListExtra("temporary1", temporary);
-        intent.putExtra("golonganDarah", golonganDarah);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        if (temporary.size() != 0){
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("data", (Serializable) dataP2);
+            Intent intent = new Intent(DiagnosaActivity.this, DiagnosaActivity2.class);
+            intent.putStringArrayListExtra("temporary1", temporary);
+            intent.putExtra("golonganDarah", golonganDarah);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        } else {
+            Toast.makeText(getApplicationContext(), "Wajib Memilih Salah satu gejala", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void initializeRetrofit(){

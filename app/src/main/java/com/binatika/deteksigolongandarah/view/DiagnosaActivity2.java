@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.binatika.deteksigolongandarah.R;
 import com.binatika.deteksigolongandarah.adapter.GejalaAdapter1;
@@ -43,6 +44,7 @@ public class DiagnosaActivity2 extends BaseActivity implements GejalaAdapter2.Ad
     GejalaAdapter2 gejalaAdapter2;
 
     ArrayList<String> temporary;
+    boolean checked;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,10 +71,14 @@ public class DiagnosaActivity2 extends BaseActivity implements GejalaAdapter2.Ad
 
     @OnClick(R.id.btnLanjut)
     public void btnLanjut(){
-        Intent intent = new Intent(DiagnosaActivity2.this, ResultPenyakit.class);
-        intent.putStringArrayListExtra("data", temporary);
-        intent.putExtra("golonganDarah", getIntent().getStringExtra("golonganDarah"));
-        startActivity(intent);
+        if (checked){
+            Intent intent = new Intent(DiagnosaActivity2.this, ResultPenyakit.class);
+            intent.putStringArrayListExtra("data", temporary);
+            intent.putExtra("golonganDarah", getIntent().getStringExtra("golonganDarah"));
+            startActivity(intent);
+        } else {
+            Toast.makeText(getApplicationContext(), "Wajib Memilih Salah satu gejala", Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -80,12 +86,14 @@ public class DiagnosaActivity2 extends BaseActivity implements GejalaAdapter2.Ad
     @Override
     public void onClick(ViewDataGejalaResponse model) {
         if (!model.isChecked()){
+            checked = false;
             for (int i = 0; i < temporary.size(); i++) {
                 if (temporary.get(i).equals(model.getKodeGejala())) {
                     temporary.remove(i);
                 }
             }
         } else {
+            checked = true;
             temporary.add(model.getKodeGejala());
         }
     }
