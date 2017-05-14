@@ -2,24 +2,23 @@ package com.binatika.deteksigolongandarah.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import com.binatika.deteksigolongandarah.R;
+import com.binatika.deteksigolongandarah.adapter.GejalaAdapter1;
+import com.binatika.deteksigolongandarah.adapter.PenyebabAdapter;
 import com.binatika.deteksigolongandarah.api.APIService;
-import com.binatika.deteksigolongandarah.api.BaseResponseGejala;
+import com.binatika.deteksigolongandarah.api.BaseResponseNamaPenyakit;
 import com.binatika.deteksigolongandarah.api.BaseResponsePenyakit;
-import com.binatika.deteksigolongandarah.api.ViewDataGejalaResponse;
-import com.binatika.deteksigolongandarah.model.GejalaPenyakitModel;
-import com.binatika.deteksigolongandarah.model.HasilPenyakitModel;
-import com.binatika.deteksigolongandarah.model.PenyakitModel;
+import com.binatika.deteksigolongandarah.model.TextModel;
 import com.binatika.deteksigolongandarah.util.Const;
 import com.binatika.deteksigolongandarah.view.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import okhttp3.OkHttpClient;
@@ -36,18 +35,38 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ResultPenyakit extends BaseActivity {
 
-    @BindView(R.id.resultPenyakit) TextView resultPenyakit;
+    @BindView(R.id.resultPenyakit) TextView txtPenyakit;
+    @BindView(R.id.rvPenyebab) RecyclerView rvPenyebab;
+    @BindView(R.id.rvPengobatan) RecyclerView rvPengobatan;
+    PenyebabAdapter penyebabAdapter1;
+    PenyebabAdapter penyebabAdapter2;
+
     private Retrofit retrofit;
     ArrayList<String> dataReceiver;
-    ArrayList<String> resultData;
+    ArrayList<String> resultPenyakit;
+    ArrayList<TextModel> resultPenyebab;
+    ArrayList<TextModel> resultPengobatan;
+    int penyakitTotal = 0 ;
     int i = 0;
+    int j = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayout(R.layout.activity_hasil, this);
-        resultData = new ArrayList<>();
+        resultPenyakit = new ArrayList<>();
+        resultPenyebab = new ArrayList<>();
+        resultPengobatan = new ArrayList<>();
 
+        rvPenyebab.setLayoutManager(new LinearLayoutManager(this));
+        rvPenyebab.setNestedScrollingEnabled(false);
+        rvPenyebab.setHasFixedSize(false);
+        rvPenyebab.setAdapter(penyebabAdapter1 = new PenyebabAdapter());
+
+        rvPengobatan.setLayoutManager(new LinearLayoutManager(this));
+        rvPengobatan.setNestedScrollingEnabled(false);
+        rvPengobatan.setHasFixedSize(false);
+        rvPengobatan.setAdapter(penyebabAdapter2 = new PenyebabAdapter());
 
         initializeRetrofit();
         result();
@@ -89,11 +108,18 @@ public class ResultPenyakit extends BaseActivity {
                 try {
                     if(response.body()!=null){
 
-                        resultData.add(response.body().getData().getNamaPenyakit());
+                        resultPenyakit.add(response.body().getData().getNamaPenyakit());
 
                         if (i == dataReceiver.size()){
-                            resultPenyakit.setText(merge(resultData));
-                            Log.e("real data", merge2(resultData));
+                            txtPenyakit.setText(merge(resultPenyakit));
+
+                            String[] penyakit = txtPenyakit.getText().toString().split(", ");
+                            penyakitTotal = penyakit.length;
+                            for (int j = 0; j < penyakit.length; j++) {
+                                getDataLanjutan(penyakit[j]);
+                            }
+
+                            Log.e("real data", merge2(resultPenyakit));
                         }
                     }
                 }catch (Exception e){
@@ -103,6 +129,45 @@ public class ResultPenyakit extends BaseActivity {
 
             @Override
             public void onFailure(Call<BaseResponsePenyakit> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+    }
+
+    private void getDataLanjutan(String nama_penyakit){
+        HashMap<String, String> params = new HashMap<>();
+        params.put("nama_penyakit", nama_penyakit);
+
+        final APIService apiService = retrofit.create(APIService.class);
+        final Call<BaseResponseNamaPenyakit> result = apiService.postPenyakit2(params);
+        result.enqueue(new Callback<BaseResponseNamaPenyakit>() {
+            @Override
+            public void onResponse(Call<BaseResponseNamaPenyakit> call, Response<BaseResponseNamaPenyakit> response) {
+                j++;
+                try {
+                    if(response.body()!=null){
+
+                        TextModel textModel1 = new TextModel();
+                        textModel1.setText(response.body().getData().getPenyebab());
+                        resultPenyebab.add(textModel1);
+
+                        TextModel textModel2 = new TextModel();
+                        textModel2.setText(response.body().getData().getPengobatan());
+                        resultPengobatan.add(textModel2);
+
+                        if (j == penyakitTotal){
+                            penyebabAdapter1.updateList(resultPenyebab);
+                            penyebabAdapter2.updateList(resultPengobatan);
+                        }
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponseNamaPenyakit> call, Throwable t) {
                 t.printStackTrace();
             }
         });

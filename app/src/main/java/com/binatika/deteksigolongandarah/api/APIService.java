@@ -21,4 +21,8 @@ public interface APIService {
     @POST("view_penyakit")
     Call<BaseResponsePenyakit> postPenyakit(@FieldMap HashMap<String, String> params);
 
+    @FormUrlEncoded
+    @POST("view_penyakit")
+    Call<BaseResponseNamaPenyakit> postPenyakit2(@FieldMap HashMap<String, String> params);
+
 }
