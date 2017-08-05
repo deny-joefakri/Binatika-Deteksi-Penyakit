@@ -112,6 +112,26 @@
                 android:layout_marginBottom="20dp"
                 android:background="@color/colorAccent"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Informasi :"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gejala dan penyakit yang sama juga kemungkinan diderita oleh golongan darah yang berbeda. Baik itu golongan darah A, B, AB, dan O. Mungkin akan lebih rentan atau justru kebal terhadap gejala dan penyakit yang sama atau lainnya."
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="50dp"/>
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
